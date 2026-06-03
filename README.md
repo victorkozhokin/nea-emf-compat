@@ -52,6 +52,7 @@ These settings are in the mod **Not Enough Animations**. This mod does not featu
 | Animation Smoothing | OFF |
 | Disable Leg Smoothing | ON |
 | Ladder Animation | OFF |
+| Bow Animation | Vanilla |
 
 ## Known Limitations
 
