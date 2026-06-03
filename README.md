@@ -8,7 +8,7 @@ Tested with Fresh Animations: Player Extension but it should work with any playe
 
 ## Video
 
-[![NEA EMF Compat](https://img.youtube.com/vi/072A-CVufho/maxresdefault.jpg)](https://youtu.be/072A-CVufho?si=IvY1qwvvB6avab2r)
+[![NEA EMF Compat](https://img.youtube.com/vi/QIZlt0xBARQ/maxresdefault.jpg)](https://youtu.be/QIZlt0xBARQ?si=IvY1qwvvB6avab2r)
 
 ## Covered Animations (EMF yields to NEA)
 
