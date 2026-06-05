@@ -10,12 +10,16 @@ build/
 *.ipr
 *.iws
 .vscode/
+*.ipr
+*.iws
+*.iml
+!.idea/.gitignore
 
 # macOS
 .DS_Store
 
 # Debug/Runtime
-[DEBUG]/
+\[DEBUG\]/
 run/
 
 # Local libs

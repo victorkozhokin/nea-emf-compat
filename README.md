@@ -43,8 +43,6 @@ The compat layer is **disabled while sprinting**, with the exception of `Burning
 
 ## Recommended "Not Enough Animations" Settings
 
-*(thanks to Cymock for the tip)*
-
 These settings are in the mod **Not Enough Animations**. This mod does not feature its own settings.
 
 | Setting | Value |
