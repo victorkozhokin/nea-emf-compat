@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "strm.neaemfcompat.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "AnimationProviderMixin",
+    "EMFModelPartRootMixin",
+    "PlayerEntityModelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
