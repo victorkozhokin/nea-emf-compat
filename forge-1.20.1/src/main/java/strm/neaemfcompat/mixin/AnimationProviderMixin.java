@@ -6,8 +6,8 @@ import dev.tr7zw.notenoughanimations.api.BasicAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.BurningAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.FreezingAnimation;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
-import net.minecraft.client.render.entity.model.PlayerEntityModel;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.player.AbstractClientPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,18 +27,17 @@ public class AnimationProviderMixin {
     @ModifyVariable(
             method = "applyAnimations",
             at = @At(value = "STORE"),
-            ordinal = 0
+            ordinal = 0,
+            remap = false
     )
     private BasicAnimation[] neaemfcompat$captureAnimationArray(BasicAnimation[] animation) {
         this.neaemfcompat$animationArray = animation;
         return animation;
     }
 
-    @Inject(method = "applyAnimations", at = @At("RETURN"))
-    private void neaemfcompat$onApplyAnimationsReturn(AbstractClientPlayerEntity entity, PlayerEntityModel model, float delta, float swing, CallbackInfo ci) {
-
+    @Inject(method = "applyAnimations", at = @At("RETURN"), remap = false)
+    private void neaemfcompat$onApplyAnimationsReturn(AbstractClientPlayer entity, PlayerModel model, float delta, float swing, CallbackInfo ci) {
         BasicAnimation[] animation = this.neaemfcompat$animationArray;
-
         if (animation == null) return;
         if (entity.isSprinting()) {
             boolean hasBurningOrFreezingOrNaruto = false;
@@ -49,7 +48,7 @@ public class AnimationProviderMixin {
                 }
             }
             if (!hasBurningOrFreezingOrNaruto) {
-                EMFCompat.entitySavedPoses.remove(entity.getUuid());
+                EMFCompat.entitySavedPoses.remove(entity.getUUID());
                 return;
             }
         }
@@ -57,13 +56,13 @@ public class AnimationProviderMixin {
         boolean leftArm = EMFCompat.shouldPauseForAnimation(animation[BodyPart.LEFT_ARM.ordinal()]);
         boolean rightArm = EMFCompat.shouldPauseForAnimation(animation[BodyPart.RIGHT_ARM.ordinal()]);
         if (!leftArm && !rightArm) {
-            EMFCompat.entitySavedPoses.remove(entity.getUuid());
+            EMFCompat.entitySavedPoses.remove(entity.getUUID());
             return;
         }
         PoseSnapshot leftPose = leftArm ? new PoseSnapshot(model.leftArm) : null;
         PoseSnapshot rightPose = rightArm ? new PoseSnapshot(model.rightArm) : null;
 
-        EMFCompat.entitySavedPoses.put(entity.getUuid(), new SavedPoses(leftPose, rightPose));
+        EMFCompat.entitySavedPoses.put(entity.getUUID(), new SavedPoses(leftPose, rightPose));
         EMFCompat.currentFrame++;
     }
 }

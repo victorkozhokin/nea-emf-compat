@@ -1,5 +1,6 @@
 package strm.neaemfcompat.mixin;
 
+import dev.tr7zw.notenoughanimations.animations.hands.NarutoRunningAnimation;
 import dev.tr7zw.notenoughanimations.logic.AnimationProvider;
 import dev.tr7zw.notenoughanimations.api.BasicAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.BurningAnimation;
@@ -41,14 +42,14 @@ public class AnimationProviderMixin {
 
         if (animation == null) return;
         if (entity.isSprinting()) {
-            boolean hasBurningOrFreezing = false;
+            boolean hasBurningOrFreezingOrNaruto = false;
             for (BasicAnimation anim : animation) {
-                if (anim instanceof BurningAnimation || anim instanceof FreezingAnimation) {
-                    hasBurningOrFreezing = true;
+                if (anim instanceof BurningAnimation || anim instanceof FreezingAnimation || anim instanceof NarutoRunningAnimation) {
+                    hasBurningOrFreezingOrNaruto = true;
                     break;
                 }
             }
-            if (!hasBurningOrFreezing) {
+            if (!hasBurningOrFreezingOrNaruto) {
                 EMFCompat.entitySavedPoses.remove(entity.getUUID());
                 return;
             }
