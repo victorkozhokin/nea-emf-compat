@@ -39,4 +39,13 @@ public class PoseSnapshot {
         part.hidden = this.hidden;
     }
 
+    /**
+     * Applies only rotation values, leaving translation, scale and visibility intact.
+     * Used to sync arm rotation with NEA while letting EMF control arm position.
+     */
+    public void applyRotation(ModelPart part) {
+        part.pitch = this.pitch;
+        part.yaw = this.yaw;
+        part.roll = this.roll;
+    }
 }

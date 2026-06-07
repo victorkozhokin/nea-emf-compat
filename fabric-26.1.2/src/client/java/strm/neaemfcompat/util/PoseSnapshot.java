@@ -39,4 +39,13 @@ public class PoseSnapshot {
         part.skipDraw = this.skipDraw;
     }
 
+    /**
+     * Applies only rotation values, leaving translation, scale and visibility intact.
+     * Used to sync arm rotation with NEA while letting EMF control arm position.
+     */
+    public void applyRotation(ModelPart part) {
+        part.xRot = this.xRot;
+        part.yRot = this.yRot;
+        part.zRot = this.zRot;
+    }
 }

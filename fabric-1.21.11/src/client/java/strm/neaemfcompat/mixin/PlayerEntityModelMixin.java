@@ -34,7 +34,7 @@ public class PlayerEntityModelMixin {
         PlayerEntityModel model = (PlayerEntityModel) (Object) this;
         PoseSnapshot snapshot = arm == Arm.LEFT ? saved.leftArm() : saved.rightArm();
         if (snapshot != null) {
-            snapshot.apply(arm == Arm.LEFT ? model.leftArm : model.rightArm);
+            snapshot.applyRotation(arm == Arm.LEFT ? model.leftArm : model.rightArm);
         }
 
     }

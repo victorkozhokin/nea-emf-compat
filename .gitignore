@@ -24,3 +24,6 @@ run/
 
 # Local libs
 libs/
+
+# Distribution output
+to modrinth/

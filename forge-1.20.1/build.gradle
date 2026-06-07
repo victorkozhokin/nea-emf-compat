@@ -10,6 +10,12 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
+    exclusiveContent {
+        forRepository {
+            maven { url = 'https://api.modrinth.com/maven' }
+        }
+        filter { includeGroup 'maven.modrinth' }
+    }
 }
 
 base {
@@ -55,9 +61,9 @@ legacyForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    compileOnly files('../libs/forge-1.20.1/notenoughanimations-forge-1.12.3-mc1.20.1.jar')
-    compileOnly files('../libs/forge-1.20.1/entity_model_features-3.2.4-1.20.1-forge.jar')
-    compileOnly files('../libs/forge-1.20.1/entity_texture_features_1.20.1-forge-7.1.jar')
+    compileOnly 'maven.modrinth:MPCX6s5C:lY76IcIZ'
+    compileOnly 'maven.modrinth:entity-model-features:3.2.4-forge-1.20.1'
+    compileOnly 'maven.modrinth:entitytexturefeatures:7.1-forge-1.20.1'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
@@ -119,3 +125,11 @@ idea {
         downloadJavadoc = true
     }
 }
+
+tasks.register('copyToModrinth', Copy) {
+    def jarTask = tasks.findByName('remapJar') ?: tasks.jar
+    from(jarTask.archiveFile)
+    into(rootProject.file("to modrinth/${project.name}"))
+}
+
+tasks.build.finalizedBy('copyToModrinth')

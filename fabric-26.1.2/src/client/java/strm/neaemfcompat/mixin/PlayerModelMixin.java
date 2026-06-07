@@ -35,7 +35,7 @@ public class PlayerModelMixin {
         PlayerModel model = (PlayerModel) (Object) this;
         PoseSnapshot snapshot = arm == HumanoidArm.LEFT ? saved.leftArm() : saved.rightArm();
         if (snapshot != null) {
-            snapshot.apply(arm == HumanoidArm.LEFT ? model.leftArm : model.rightArm);
+            snapshot.applyRotation(arm == HumanoidArm.LEFT ? model.leftArm : model.rightArm);
         }
     }
 }

@@ -10,7 +10,12 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
-
+    exclusiveContent {
+        forRepository {
+            maven { url = 'https://api.modrinth.com/maven' }
+        }
+        filter { includeGroup 'maven.modrinth' }
+    }
 }
 
 base {
@@ -56,9 +61,9 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    compileOnly files('../libs/neoforge-1.21.1/not-enough-animations-neoforge-1.10.6-mc1.21.1.jar')
-    compileOnly files('../libs/neoforge-1.21.1/entity_model_features-3.2.4-1.21-neoforge.jar')
-    compileOnly files('../libs/neoforge-1.21.1/entity_texture_features_1.21-neoforge-7.1.jar')
+    compileOnly 'maven.modrinth:MPCX6s5C:1o1ia1vh'
+    compileOnly 'maven.modrinth:entity-model-features:3.2.4-neoforge-1.21'
+    compileOnly 'maven.modrinth:entitytexturefeatures:7.1-neoforge-1.21'
     //для тестов на будущее ( better combat и sitting+ как минимум)
 /*    compileOnly files('../libs/neoforge-1.21.1/PlayerAnimationLibNeoforge-1.1.4+mc.1.21.1.jar')
     compileOnly files('../libs/neoforge-1.21.1/bettercombat-neoforge-2.3.2+1.21.1.jar')
@@ -105,3 +110,11 @@ idea {
         downloadJavadoc = true
     }
 }
+
+tasks.register('copyToModrinth', Copy) {
+    def jarTask = tasks.findByName('remapJar') ?: tasks.jar
+    from(jarTask.archiveFile)
+    into(rootProject.file("to modrinth/${project.name}"))
+}
+
+tasks.build.finalizedBy('copyToModrinth')

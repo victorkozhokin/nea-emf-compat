@@ -58,8 +58,8 @@ public class PlayerRendererMixin {
         }
 
         if (snapshot != null) {
-            snapshot.apply(armPart);
-            snapshot.apply(sleevePart);
+            snapshot.applyRotation(armPart);
+            snapshot.applyRotation(sleevePart);
         }
     }
 }

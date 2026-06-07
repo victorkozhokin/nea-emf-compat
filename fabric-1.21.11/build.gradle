@@ -23,6 +23,12 @@ loom {
 
 repositories {
     mavenLocal()
+    exclusiveContent {
+        forRepository {
+            maven { url = 'https://api.modrinth.com/maven' }
+        }
+        filter { includeGroup 'maven.modrinth' }
+    }
 }
 
 dependencies {
@@ -33,9 +39,9 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modCompileOnly files('../libs/fabric-1.21.11/notenoughanimations-fabric-1.12.3-mc1.21.11.jar')
-    modCompileOnly files('../libs/fabric-1.21.11/entity_model_features-3.2.4-1.21.11-fabric.jar')
-    modCompileOnly files('../libs/fabric-1.21.11/entity_texture_features_1.21.11-fabric-7.1.jar')
+    modCompileOnly 'maven.modrinth:MPCX6s5C:KpQedWwW'
+    modCompileOnly 'maven.modrinth:entity-model-features:3.2.4-fabric-1.21.11'
+    modCompileOnly 'maven.modrinth:entitytexturefeatures:7.1-fabric-1.21.11'
 }
 
 processResources {
@@ -101,3 +107,11 @@ publishing {
         // retrieving dependencies.
     }
 }
+
+tasks.register('copyToModrinth', Copy) {
+    def jarTask = tasks.findByName('remapJar') ?: tasks.jar
+    from(jarTask.archiveFile)
+    into(rootProject.file("to modrinth/${project.name}"))
+}
+
+tasks.build.finalizedBy('copyToModrinth')
