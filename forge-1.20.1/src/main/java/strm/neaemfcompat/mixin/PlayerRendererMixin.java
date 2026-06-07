@@ -27,16 +27,7 @@ public class PlayerRendererMixin {
             )
     )
     private void neaemfcompat$restoreArmPoseBeforeFirstRender(PoseStack stack, MultiBufferSource buffer, int i, AbstractClientPlayer player, ModelPart armPart, ModelPart sleevePart, CallbackInfo ci) {
-        SavedPoses saved = EMFCompat.entitySavedPoses.get(player.getUUID());
-        if (saved == null) return;
-
-        PlayerModel<AbstractClientPlayer> model = ((PlayerRenderer) (Object) this).getModel();
-        PoseSnapshot snapshot = armPart == model.leftArm ? saved.leftArm() : armPart == model.rightArm ? saved.rightArm() : null;
-
-        if (snapshot != null) {
-            snapshot.applyRotation(armPart);
-            snapshot.applyRotation(sleevePart);
-        }
+        restorePose(armPart, sleevePart, player);
     }
 
     @Inject(
@@ -49,11 +40,22 @@ public class PlayerRendererMixin {
             )
     )
     private void neaemfcompat$restoreArmPoseBeforeSecondRender(PoseStack stack, MultiBufferSource buffer, int i, AbstractClientPlayer player, ModelPart armPart, ModelPart sleevePart, CallbackInfo ci) {
+        restorePose(armPart, sleevePart, player);
+    }
+
+    private void restorePose(ModelPart armPart, ModelPart sleevePart, AbstractClientPlayer player) {
         SavedPoses saved = EMFCompat.entitySavedPoses.get(player.getUUID());
         if (saved == null) return;
 
         PlayerModel<AbstractClientPlayer> model = ((PlayerRenderer) (Object) this).getModel();
-        PoseSnapshot snapshot = armPart == model.leftArm ? saved.leftArm() : armPart == model.rightArm ? saved.rightArm() : null;
+        PoseSnapshot snapshot;
+        if (armPart == model.leftArm) {
+            snapshot = saved.leftArm();
+        } else if (armPart == model.rightArm) {
+            snapshot = saved.rightArm();
+        } else {
+            return;
+        }
 
         if (snapshot != null) {
             snapshot.applyRotation(armPart);
