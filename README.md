@@ -12,18 +12,19 @@ Tested with Fresh Animations: Player Extension but it should work with any playe
 
 ## Covered Animations (EMF yields to NEA)
 
-| Animation | Notes |
-|---|---|
-| Boat (rowing) | |
-| Horse (riding) | |
+| Animation         | Notes |
+|-------------------|-|
+| Boat (rowing)     | |
+| Horse (riding)    | |
 | Eating / Drinking | |
-| Hug | |
-| Item Swap | |
-| Petting | |
-| Map Holding | |
-| Hold Up Items | Lanterns, etc. |
-| Burning | Works even while sprinting |
-| Freezing | Works even while sprinting |
+| Hug               | |
+| Item Swap         | |
+| Petting           | |
+| Map Holding       | |
+| Hold Up Items     | Lanterns, etc. |
+| Burning           | Works even while sprinting |
+| Freezing          | Works even while sprinting |
+| Naruto Running    | |
 
 ## Ignored Animations (Fresh Animations: Player Extension handles them better)
 
