@@ -25,7 +25,6 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: false
-          cache-cleanup: true
 
       - name: Build with Gradle
         run: ./gradlew build --no-daemon -Dorg.gradle.configuration-cache=false --stacktrace
