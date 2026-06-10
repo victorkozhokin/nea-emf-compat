@@ -20,10 +20,21 @@ public class EMFModelPartRootMixin {
     @Unique
     private long neaemfcompat$lastRestoreFrame = -1;
 
+    @Unique
+    private static int neaemfcompat$cleanupCounter = 0;
+
     @Inject(method = "animate", at = @At("RETURN"), remap = false)
     private void neaemfcompat$restorePosesAfterAnimate(CallbackInfo ci) {
         if (neaemfcompat$lastRestoreFrame == EMFCompat.currentFrame) return;
         neaemfcompat$lastRestoreFrame = EMFCompat.currentFrame;
+
+        if (++neaemfcompat$cleanupCounter % 200 == 0) {
+            var mc = Minecraft.getInstance();
+            if (mc.level != null) {
+                var activeUUIDs = mc.level.players().stream().map(p -> p.getUUID()).collect(java.util.stream.Collectors.toSet());
+                EMFCompat.entitySavedPoses.keySet().retainAll(activeUUIDs);
+            }
+        }
 
         var state = EMFAnimationEntityContext.getEmfState();
         if (state == null || state.emfEntity() == null) return;

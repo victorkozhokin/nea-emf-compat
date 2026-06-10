@@ -24,6 +24,11 @@ public class AnimationProviderMixin {
     @Unique
     private BasicAnimation[] neaemfcompat$animationArray;
 
+    @Inject(method = "applyAnimations", at = @At("HEAD"))
+    private void neaemfcompat$resetAnimationArray(AbstractClientPlayer entity, PlayerModel model, float delta, float swing, CallbackInfo ci) {
+        this.neaemfcompat$animationArray = null;
+    }
+
     @ModifyVariable(
             method = "applyAnimations",
             at = @At(value = "STORE"),
