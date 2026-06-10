@@ -127,7 +127,7 @@ idea {
 }
 
 tasks.register('copyToModrinth', Copy) {
-    def jarTask = tasks.findByName('remapJar') ?: tasks.jar
+    def jarTask = tasks.findByName('reobfJar') ?: tasks.findByName('remapJar') ?: tasks.jar
     from(jarTask.archiveFile)
     into(rootProject.file("to modrinth/${project.name}"))
 }

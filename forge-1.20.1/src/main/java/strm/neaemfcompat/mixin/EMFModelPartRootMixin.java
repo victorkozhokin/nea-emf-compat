@@ -31,7 +31,7 @@ public class EMFModelPartRootMixin {
         UUID uuid = state.emfEntity().etf$getUuid();
 
         var mc = Minecraft.getInstance();
-        if (mc.player != null && mc.player.getUUID().equals(uuid) && mc.options.getCameraType().isFirstPerson()) {
+        if (mc.player != null && mc.player.getUUID().equals(uuid) && mc.options.getCameraType().isFirstPerson() && mc.getCameraEntity() == mc.player) {
             return;
         }
 
@@ -44,7 +44,6 @@ public class EMFModelPartRootMixin {
         EMFModelPartVanilla leftSleeve = null;
         EMFModelPartVanilla rightSleeve = null;
 
-        // исправление бага с рукавом, который возникает из-за снапшотского костыля
         for (EMFModelPartVanilla part : root.getAllVanillaPartsEMF()) {
             String shortName = part.toStringShort();
             if ("[vanilla part left_arm]".equals(shortName)) {

@@ -31,7 +31,7 @@ public class EMFModelPartRootMixin {
         UUID uuid = state.emfEntity().etf$getUuid();
 
         var mc = Minecraft.getInstance();
-        if (mc.player != null && mc.player.getUUID().equals(uuid) && mc.options.getCameraType().isFirstPerson()) {
+        if (mc.player != null && mc.player.getUUID().equals(uuid) && mc.options.getCameraType().isFirstPerson() && mc.getCameraEntity() == mc.player) {
             return;
         }
 
