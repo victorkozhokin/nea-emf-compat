@@ -10,6 +10,7 @@ import traben.entity_model_features.models.animation.EMFAnimationEntityContext;
 import traben.entity_model_features.models.parts.EMFModelPartRoot;
 import traben.entity_model_features.models.parts.EMFModelPartVanilla;
 import strm.neaemfcompat.compat.EMFCompat;
+import strm.neaemfcompat.util.PoseSnapshot;
 import strm.neaemfcompat.util.SavedPoses;
 
 import java.util.UUID;
@@ -75,7 +76,11 @@ public class EMFModelPartRootMixin {
             }
         }
 
-        if (leftArmPart != null && leftSleeve != null) leftSleeve.copyFrom(leftArmPart);
-        if (rightArmPart != null && rightSleeve != null) rightSleeve.copyFrom(rightArmPart);
+        if (leftArmPart != null && leftSleeve != null && !leftArmPart.hasChild("left_sleeve")) {
+            new PoseSnapshot(leftArmPart).apply(leftSleeve);
+        }
+        if (rightArmPart != null && rightSleeve != null && !rightArmPart.hasChild("right_sleeve")) {
+            new PoseSnapshot(rightArmPart).apply(rightSleeve);
+        }
     }
 }

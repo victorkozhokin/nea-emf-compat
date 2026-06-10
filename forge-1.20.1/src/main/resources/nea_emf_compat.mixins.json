@@ -6,6 +6,7 @@
   "mixins": [],
   "client": [
     "AnimationProviderMixin",
+    "EMFBipedPoseMixin",
     "EMFModelPartRootMixin",
     "PlayerRendererMixin"
   ],

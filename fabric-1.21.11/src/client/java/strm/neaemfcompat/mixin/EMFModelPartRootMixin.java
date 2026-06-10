@@ -10,6 +10,7 @@ import traben.entity_model_features.models.animation.EMFAnimationEntityContext;
 import traben.entity_model_features.models.parts.EMFModelPartRoot;
 import traben.entity_model_features.models.parts.EMFModelPartVanilla;
 import strm.neaemfcompat.compat.EMFCompat;
+import strm.neaemfcompat.util.PoseSnapshot;
 import strm.neaemfcompat.util.SavedPoses;
 
 import java.util.UUID;
@@ -75,23 +76,11 @@ public class EMFModelPartRootMixin {
             }
         }
 
-        if (leftArmPart != null && leftSleeve != null) {
-            var vanillaArm = leftArmPart.getVanillaModelPartsOfCurrentState();
-            var vanillaSleeve = leftSleeve.getVanillaModelPartsOfCurrentState();
-            if (vanillaArm != null && vanillaSleeve != null && vanillaArm != leftArmPart) {
-                savedPoses.leftArm().applyRotation(vanillaSleeve);
-            } else {
-                savedPoses.leftArm().applyRotation(leftSleeve);
-            }
+        if (leftArmPart != null && leftSleeve != null && !leftArmPart.hasChild("left_sleeve")) {
+            new PoseSnapshot(leftArmPart).apply(leftSleeve);
         }
-        if (rightArmPart != null && rightSleeve != null) {
-            var vanillaArm = rightArmPart.getVanillaModelPartsOfCurrentState();
-            var vanillaSleeve = rightSleeve.getVanillaModelPartsOfCurrentState();
-            if (vanillaArm != null && vanillaSleeve != null && vanillaArm != rightArmPart) {
-                savedPoses.rightArm().applyRotation(vanillaSleeve);
-            } else {
-                savedPoses.rightArm().applyRotation(rightSleeve);
-            }
+        if (rightArmPart != null && rightSleeve != null && !rightArmPart.hasChild("right_sleeve")) {
+            new PoseSnapshot(rightArmPart).apply(rightSleeve);
         }
     }
 }
